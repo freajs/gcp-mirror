@@ -1,9 +1,17 @@
 'use strict'
 
-// const { PubSub } = require('@google-cloud/pubsub')
-
+const { PubSub } = require('@google-cloud/pubsub')
 const follow = require('follow')
-const queue = require('async').queue
+const pino = require('pino')
+
+const pubsub = new PubSub()
+const topic = pubsub.topic('packages')
+topic.setPublishOptions()
+
+const log = pino({
+  name: 'frea-follower',
+  level: 'error'
+})
 
 follow({
   db: 'https://replicate.npmjs.com/registry',
@@ -12,8 +20,17 @@ follow({
 }, handleChange)
 
 function handleChange (e, change) {
-  if (change === undefined || change.seq === undefined) {
+  if (e) {
+    log.error('failed to get change', { e })
+  }
+
+  if (!change || !change.id) {
     return
   }
-  console.log(change.id)
+
+  topic.publish(String(change.id), (e) => {
+    if (e) {
+      log.error('failed to publish topic', { e })
+    }
+  })
 }

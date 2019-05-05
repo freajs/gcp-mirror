@@ -10,7 +10,7 @@ const str = require('string-to-stream')
 const miss = require('mississippi')
 
 const logger = require('pino')({
-  name: 'frea-tarballs',
+  name: 'frea-packages',
   level: 'error'
 })
 
