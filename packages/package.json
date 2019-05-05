@@ -1,0 +1,22 @@
+{
+  "name": "frea-gcp-mirror-function-package",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:freajs/gcp-mirror.git",
+  "author": "William Blankenship <frea@blankenship.io>",
+  "license": "Apache-2.0",
+  "private": false,
+  "dependencies": {
+    "@google-cloud/pubsub": "^0.28.1",
+    "@google-cloud/storage": "^2.5.0",
+    "async": "^2.6.2",
+    "mississippi": "^4.0.0",
+    "npm-change-resolve": "^1.0.4",
+    "once": "^1.4.0",
+    "pino": "^5.12.3",
+    "string-to-stream": "^1.1.1"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}

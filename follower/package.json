@@ -1,0 +1,18 @@
+{
+  "name": "frea-gcp-mirror-follower",
+  "version": "1.0.0",
+  "description": "Follows the npm registry and pushes changes to PubSub",
+  "main": "index.js",
+  "repository": "git@github.com:freajs/gcp-mirror",
+  "author": "William Blankenship <frea@blankenship.io>",
+  "license": "Apache-2.0",
+  "private": false,
+  "dependencies": {
+    "@google-cloud/pubsub": "^0.28.1",
+    "async": "^2.6.2",
+    "follow": "^1.1.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}
