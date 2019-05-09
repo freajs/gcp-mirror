@@ -1,25 +1,40 @@
 'use strict'
 
 const { Storage } = require('@google-cloud/storage')
-const storage = new Storage()
-const logger = require('pino')({
-  name: 'frea-tarballs',
-  level: 'error'
-})
-const bucket = storage.bucket('freajs')
 const miss = require('mississippi')
 const crypto = require('crypto')
 const once = require('once').strict
 const got = require('got')
+const { LoggingBunyan } = require('@google-cloud/logging-bunyan')
+const bunyan = require('bunyan')
+
+function initLogger (url, path, shasum) {
+  const stackdriver = (new LoggingBunyan()).stream('info')
+  const log = bunyan.createLogger({
+    name: 'frea-packages',
+    level: 'info',
+    streams: [
+      stackdriver
+    ],
+    url,
+    path,
+    shasum
+  })
+
+  log.callback = (cb) => () => stackdriver.stream.end(cb)
+
+  return log
+}
+
+const storage = new Storage()
+const bucket = storage.bucket('freajs')
 
 exports.tarballs = function tarballs (message, _, cb) {
-  const callback = once(cb)
   const url = Buffer.from(message.data || '', 'base64').toString()
   const { path, shasum } = message.attributes
-
-  const log = logger.child({
-    url, path, shasum
-  })
+  const log = initLogger(url, path, shasum)
+  const callback = once(log.callback(cb))
+  log.info('processing')
 
   // If we weren't given a url, this message cant be handled
   // so discard it
@@ -49,7 +64,7 @@ exports.tarballs = function tarballs (message, _, cb) {
     }),
     function (e) {
       if (e) {
-        log.error('failed to download/upload', { e })
+        log.error({ err: e }, 'failed to download/upload')
         return callback()
       }
 
@@ -60,9 +75,7 @@ exports.tarballs = function tarballs (message, _, cb) {
         return callback()
       }
 
-      log.error('failed integrity check', {
-        hash
-      })
+      log.error({ hash }, 'failed integrity check')
 
       file.delete(callback)
     })

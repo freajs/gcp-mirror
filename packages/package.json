@@ -7,13 +7,14 @@
   "license": "Apache-2.0",
   "private": false,
   "dependencies": {
+    "@google-cloud/logging-bunyan": "^0.10.1",
     "@google-cloud/pubsub": "^0.28.1",
     "@google-cloud/storage": "^2.5.0",
     "async": "^2.6.2",
+    "bunyan": "^1.8.12",
     "mississippi": "^4.0.0",
     "npm-change-resolve": "^1.0.4",
     "once": "^1.4.0",
-    "pino": "^5.12.3",
     "string-to-stream": "^1.1.1"
   },
   "devDependencies": {
