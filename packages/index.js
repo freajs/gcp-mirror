@@ -16,6 +16,8 @@ const bunyan = require('bunyan')
 const pubsub = new PubSub()
 const topic = pubsub.topic('tarballs')
 topic.setPublishOptions({
+  // Dont batch messages! We want to flush to Pub/Sub immediately since this
+  // is a Cloud Function invocation
   batching: {
     maxMessages: 0
   }
