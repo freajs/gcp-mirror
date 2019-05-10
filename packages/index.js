@@ -81,6 +81,10 @@ function initLogger (data) {
 // 2. Uploads the package level manifest to Google Cloud Storage
 // 3. Uploads the individual manifest for each published version of the package
 //    to Google Cloud Storage
+// When this finishes it's invocation, all of the manifests for a package will
+// be being mirrored, and we should have triggered a set of Cloud Functions that
+// will be downloading the tarballs. Once the Cloud Functions finish downloading
+// the tarballs the entire package will be mirrored.
 exports.packages = function packages (message, _, cb) {
   // Parse the package name from the base64 encoded Pub/Sub message
   const data = Buffer.from(message.data || '', 'base64').toString()
@@ -93,12 +97,11 @@ exports.packages = function packages (message, _, cb) {
   // is handy for catching async logic bugs at runtime.
   const callback = once(log.callback(cb))
   // Write out an informational log that let's us know what package this
-  // invocation
+  // invocation is handling
   log.info('processing')
 
-  // If we weren't given a change.id, this message cant be handled
-  // so discard it. This should never happen, but it's probably wise to guard
-  // against
+  // If we weren't given a change.id, this message cant be handled so discard
+  // it. This should never happen, but it's probably wise to guard against.
   if (data.length === 0) {
     log.error('invalid message length')
     return callback()
