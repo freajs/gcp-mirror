@@ -2214,9 +2214,9 @@ npm-bundled@^1.0.1:
   integrity sha512-8/JCaftHwbd//k6y2rEWp6k1wxVfpFzB6t1p825+cUb7Ym2XQfhwIC5KwhrvzZRJu+LtDE585zVaS32+CGtf0g==
 
 npm-change-resolve@^1.0.4:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/npm-change-resolve/-/npm-change-resolve-1.0.5.tgz#0356977bf8b1afbbe1bff6b08689a252c11180d9"
-  integrity sha512-Yu3dR7v4kvQL4vW1XCtQm8o/yAzV9qgvl60Dlh9vDMtewv7ahav/YFkwxUCVlbxJkIQXR0QiNeiJ/foII86l0A==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/npm-change-resolve/-/npm-change-resolve-1.1.0.tgz#ce4563b8f7fdea7e5c2b25c3be4a6aee1b64d665"
+  integrity sha512-wDhbjKEx4E4QRKOQ7+bfWLxdZs6odpGy5HQOVANK+s5q1ELA7QcXG1KVH7OFfl42FVtHQC6flP88E5BiEf+w7A==
   dependencies:
     follow "^1.1.0"
     got "^9.6.0"
