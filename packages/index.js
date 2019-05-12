@@ -64,7 +64,13 @@ function initLogger (data) {
   // with logic that closes the stackdriver stream and waits for it to fully
   // flush before invoking the Cloud Function's callback. This guarentees the
   // logs will be written to stackdriver before the function terminates.
-  log.callback = (cb) => () => stackdriver.stream.end(cb)
+  log.callback = (cb) => {
+    return () => {
+      setImmediate(() => {
+        stackdriver.stream.end(cb)
+      })
+    }
+  }
 
   // Return our new bunyan instance
   return log

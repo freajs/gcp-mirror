@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "fs-blob-store": "^5.2.1",
+    "function-rate-limit": "^1.1.0",
+    "mkdirp": "^0.5.1",
+    "proxyquire": "^2.1.0"
+  }
+}
